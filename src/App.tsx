@@ -1,24 +1,17 @@
+/*
+ * @Descripttion: test
+ * @Date: 2021-04-26 15:53:01
+ * @LastEditors: love-coding
+ * @LastEditTime: 2021-04-26 20:59:09
+ */
 import React from 'react';
-import logo from './logo.svg';
+import { ProjectListScreen } from 'screens/project-list';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ProjectListScreen/>
     </div>
   );
 }
