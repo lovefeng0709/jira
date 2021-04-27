@@ -2,11 +2,11 @@
  * @Descripttion: test
  * @Date: 2021-04-26 22:06:28
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-27 13:51:04
+ * @LastEditTime: 2021-04-27 14:32:21
  */
 import  { useState, useEffect } from 'react'
-
-export const isFalsy = (value:any) => (value === 0 ? false : !value);
+// unknown 不能赋值给任何类型 也不能在它上读取方法
+export const isFalsy = (value:unknown):boolean => (value === 0 ? false : !value);
 // 在一个函数里，改变传入的对象本身是不好的
 export const cleanObject = (obj:object) => {
 	const result = { ...obj };
@@ -33,8 +33,8 @@ export const cleanObject = (obj:object) => {
 // 		}, delay);
 // 	};
 // };
-
-export const useDebounce = (value:any, delay?:number)=>{
+// 后面用泛型来规范类型
+export const useDebounce = (value:unknown, delay?:number):any=>{
     const [debounceValue, setDebounceValue] = useState(value);
 	// 每次在value变化以后，设置一个定时器
 	useEffect(() => {
