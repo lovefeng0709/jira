@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 22:06:28
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-27 14:32:21
+ * @LastEditTime: 2021-04-27 14:48:23
  */
 import  { useState, useEffect } from 'react'
 // unknown 不能赋值给任何类型 也不能在它上读取方法
@@ -33,8 +33,8 @@ export const cleanObject = (obj:object) => {
 // 		}, delay);
 // 	};
 // };
-// 后面用泛型来规范类型
-export const useDebounce = (value:unknown, delay?:number):any=>{
+// 用泛型来规范类型
+export const useDebounce =<V> (value:V, delay?:number)=>{
     const [debounceValue, setDebounceValue] = useState(value);
 	// 每次在value变化以后，设置一个定时器
 	useEffect(() => {
