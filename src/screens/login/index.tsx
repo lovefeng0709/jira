@@ -2,12 +2,13 @@
  * @Descripttion: test
  * @Date: 2021-04-27 19:06:42
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-27 20:02:35
+ * @LastEditTime: 2021-04-27 21:42:47
  */
 import React, { FormEvent} from 'react';
 const apiUrl = process.env.REACT_APP_API_URL;
 const Login = () => {
 	const login = (param:{username:string, password:string})=>{
+		// 注册使用 /register
 		fetch(`${apiUrl}/login`,{
 			method: 'POST',
 			headers: {

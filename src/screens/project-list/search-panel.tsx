@@ -2,12 +2,16 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:42:15
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-27 13:43:49
+ * @LastEditTime: 2021-04-27 21:57:41
  */
 import React from 'react';
 export interface User {
 	id: string;
 	name: string;
+	email: string;
+	title: string;
+	organization: string;
+	token: string;
 }
 interface SearchPanelProps {
 	param:{
