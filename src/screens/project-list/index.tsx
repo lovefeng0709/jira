@@ -1,9 +1,18 @@
+/*
+ * @Descripttion: test
+ * @Date: 2021-04-26 16:39:11
+ * @LastEditors: love-coding
+ * @LastEditTime: 2021-04-27 13:55:47
+ */
 import React, { useState, useEffect } from 'react';
 import { List } from './list';
 import { SearchPanel } from './search-panel';
-import {cleanObject} from 'utils';
+import {cleanObject,useDebounce} from 'utils';
 import * as qs from 'qs';
+
+// baseUrl
 const apiUrl = process.env.REACT_APP_API_URL;
+
 export const ProjectListScreen = () => {
 	const [ param, setParam ] = useState({
 		name: '',
@@ -11,16 +20,20 @@ export const ProjectListScreen = () => {
 	});
 	const [ users, setUsers ] = useState([]);
 	const [ list, setList ] = useState([]);
+	// useDebounce 自定义hook
+	const debounceParam = useDebounce(param,500)
+
 	useEffect(
 		() => {
-			fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(async (response) => {
+			fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceParam))}`).then(async (response) => {
 				if (response.ok) {
 					setList(await response.json());
 				}
 			});
 		},
-		[ param ]
+		[ debounceParam ]
 	);
+
 	useEffect(() => {
 		fetch(`${apiUrl}/users`).then(async (response) => {
 			if (response.ok) {
@@ -28,6 +41,7 @@ export const ProjectListScreen = () => {
 			}
 		});
 	}, []);
+
 	return (
 		<div>
 			<SearchPanel param={param} users={users} setParam={setParam} />
