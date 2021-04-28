@@ -2,12 +2,22 @@
  * @Descripttion: test
  * @Date: 2021-04-28 10:39:17
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-28 15:19:04
+ * @LastEditTime: 2021-04-28 18:17:34
  */
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import * as auth from 'auth-provider';
 import { User } from 'screens/project-list/search-panel';
-
+import { http } from 'utils/http';
+//初始化user
+const bootstrapUser=async ()=>{
+    let user = null;
+    const token = auth.getToken()
+    if(token){
+        const data = await http('me',{token})
+        user = data.user
+    }
+    return user
+}
 const AuthContext = React.createContext<
 	| {
 		user: User | null;
@@ -29,7 +39,9 @@ export const AuthProvider = ({children}:{ children:ReactNode}) => {
 	const login = (form: AuthForm) => auth.login(form).then(setUser);
 	const register = (form: AuthForm) => auth.register(form).then(setUser);
 	const logout = () => auth.logout().then(() => setUser(null));
-
+    useEffect(() => {
+        bootstrapUser().then(setUser)
+    }, []);
 	return <AuthContext.Provider children={children} value={{ user, login, register, logout }} />;
 };
 
