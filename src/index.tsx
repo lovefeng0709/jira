@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 15:53:01
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-28 15:21:12
+ * @LastEditTime: 2021-04-28 20:15:15
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -10,6 +10,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {loadDevTools } from 'jira-dev-tool'
+//务必在jira-dev-tool后引入  jira-dev-tool中也用了antd 所以要覆盖掉
+import 'antd/dist/antd.less'
 import { AppProviders } from 'context';
 loadDevTools(()=>ReactDOM.render(
   <React.StrictMode>

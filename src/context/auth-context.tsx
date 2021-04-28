@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 10:39:17
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-28 18:17:34
+ * @LastEditTime: 2021-04-28 18:53:27
  */
 import React, { ReactNode, useEffect, useState } from 'react';
 import * as auth from 'auth-provider';
@@ -19,7 +19,7 @@ const bootstrapUser=async ()=>{
     return user
 }
 const AuthContext = React.createContext<
-	| {
+	 {
 		user: User | null;
 		login: (form: AuthForm) => Promise<void>;
 		register: (form: AuthForm) => Promise<void>;
