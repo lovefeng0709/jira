@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 15:53:01
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-27 20:49:43
+ * @LastEditTime: 2021-04-28 15:21:12
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -10,9 +10,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {loadDevTools } from 'jira-dev-tool'
+import { AppProviders } from 'context';
 loadDevTools(()=>ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppProviders>
+      <App />
+    </AppProviders>
   </React.StrictMode>,
   document.getElementById('root')
 ));

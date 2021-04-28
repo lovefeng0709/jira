@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-27 21:46:26
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-27 22:02:50
+ * @LastEditTime: 2021-04-28 14:26:40
  */
 // 定义一些函数 帮助操控jwt的token
 
@@ -18,7 +18,7 @@ export const handleUserResponse = ({ user }: { user: User }) => {
 	return user;
 };
 export const login = (data: { username: string; password: string }) => {
-	fetch(`${apiUrl}/login`, {
+	return fetch(`${apiUrl}/login`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -27,11 +27,13 @@ export const login = (data: { username: string; password: string }) => {
 	}).then(async (response) => {
 		if (response.ok) {
 			return handleUserResponse(await response.json());
+		} else {
+			return Promise.reject(data);
 		}
 	});
 };
 export const register = (data: { username: string; password: string }) => {
-	fetch(`${apiUrl}/register`, {
+	return fetch(`${apiUrl}/register`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -40,7 +42,9 @@ export const register = (data: { username: string; password: string }) => {
 	}).then(async (response) => {
 		if (response.ok) {
 			return handleUserResponse(await response.json());
+		} else {
+			return Promise.reject(data);
 		}
 	});
 };
-export const logout = () => window.localStorage.removeItem(localStorageKey)
+export const logout =async () => window.localStorage.removeItem(localStorageKey);
