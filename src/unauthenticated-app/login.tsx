@@ -2,12 +2,13 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:53:09
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-28 20:47:32
+ * @LastEditTime: 2021-04-29 08:07:40
  */
 
 import { useAuth } from 'context/auth-context';
-import {Form,Input,Button} from 'antd'
+import {Form,Input} from 'antd'
 import React from 'react';
+import { LongButton } from 'unauthenticated-app';
 const Login = () => {
 	const {login} = useAuth()
     const handleSubmit=(values:{username:string,password:string})=>{
@@ -21,7 +22,7 @@ const Login = () => {
 			<Form.Item name={'password'}  rules={[{ required: true, message: 'Please input your password!' }]} >
 				<Input placeholder={'密码'} type="password" id="password" />
 			</Form.Item>
-			<Button type="primary" htmlType="submit">登录</Button>
+			<LongButton type="primary" htmlType="submit">登录</LongButton>
 		</Form>
 	);
 };

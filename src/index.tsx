@@ -2,11 +2,10 @@
  * @Descripttion: test
  * @Date: 2021-04-26 15:53:01
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-28 20:15:15
+ * @LastEditTime: 2021-04-29 08:09:04
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {loadDevTools } from 'jira-dev-tool'
