@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:39:11
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-09 13:41:35
+ * @LastEditTime: 2021-05-09 18:02:09
  */
 import React, { useState, useEffect } from 'react';
 import { List } from './list';
@@ -26,11 +26,13 @@ export const ProjectListScreen = () => {
 		() => {
 			client('projects',{data:cleanObject(debounceParam)}).then(setList)
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ debounceParam ]
 	);
 
 	useEffect(() => {
 		client('users').then(setUsers)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

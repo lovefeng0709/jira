@@ -2,19 +2,20 @@
  * @Descripttion: test
  * @Date: 2021-04-26 15:53:01
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-29 08:09:04
+ * @LastEditTime: 2021-05-09 18:19:01
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {loadDevTools } from 'jira-dev-tool'
+import { DevTools, loadServer } from "jira-dev-tool";
 //务必在jira-dev-tool后引入  jira-dev-tool中也用了antd 所以要覆盖掉
 import 'antd/dist/antd.less'
 import { AppProviders } from 'context';
-loadDevTools(()=>ReactDOM.render(
+loadServer(()=>ReactDOM.render(
   <React.StrictMode>
     <AppProviders>
+      <DevTools/>
       <App />
     </AppProviders>
   </React.StrictMode>,

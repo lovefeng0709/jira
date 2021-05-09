@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:58
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-29 08:12:39
+ * @LastEditTime: 2021-05-09 17:56:45
  */
 import React, { useState } from 'react';
 import Login from './login';
@@ -23,7 +23,7 @@ export const UnauthenticatedAPP = () => {
 			<Title>{isRegister? '请注册':'请登录'}</Title>
 			{isRegister ? <Register /> : <Login />}
 			<Divider/>
-			<a href="void(0)" onClick={() => setIsRegister(!isRegister)}>{isRegister ? '已经有账号了?去登录' : '没有账号？注册新账号'}</a>	
+			<Button type={'link'} onClick={() => setIsRegister(!isRegister)}>{isRegister ? '已经有账号了?去登录' : '没有账号？注册新账号'}</Button>	
 			</ShadowCard>
 			
 		</Container>
