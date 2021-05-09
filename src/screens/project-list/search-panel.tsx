@@ -2,9 +2,11 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:42:15
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-28 21:45:54
+ * @LastEditTime: 2021-05-09 13:40:19
  */
-import { Input, Select } from 'antd';
+
+/* @jsxImportSource @emotion/react */
+import { Form, Input, Select } from 'antd';
 import React from 'react';
 export interface User {
 	id: string;
@@ -24,9 +26,10 @@ interface SearchPanelProps {
 }
 export const SearchPanel = ({ param, users, setParam }:SearchPanelProps) => {
 	return (
-		<form>
-			<div>
+		<Form css={{marginBottom: '2rem'}} layout={'inline'}>
+			<Form.Item>
 				<Input type="text"
+				placeholder={'项目名'}
 					value={param.name}
 					onChange={(e) => {
 						setParam({
@@ -35,6 +38,8 @@ export const SearchPanel = ({ param, users, setParam }:SearchPanelProps) => {
 						});
 				      }}  
 				/>
+			</Form.Item>
+			<Form.Item>
 				<Select
 					value={param.personId}
 					onChange={(value) =>
@@ -50,7 +55,7 @@ export const SearchPanel = ({ param, users, setParam }:SearchPanelProps) => {
 						</Select.Option >
 					   ))}
 				</Select>
-			</div>
-		</form>
+			</Form.Item>
+		</Form>
 	);
 };

@@ -2,13 +2,14 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:39:11
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-29 08:23:25
+ * @LastEditTime: 2021-05-09 13:41:35
  */
 import React, { useState, useEffect } from 'react';
 import { List } from './list';
 import { SearchPanel } from './search-panel';
 import {cleanObject,useDebounce} from 'utils';
 import { useHttp } from 'utils/http';
+import styled from '@emotion/styled';
 
 
 export const ProjectListScreen = () => {
@@ -33,9 +34,12 @@ export const ProjectListScreen = () => {
 	}, []);
 
 	return (
-		<div>
+		<Container>
 			<SearchPanel param={param} users={users} setParam={setParam} />
 			<List list={list} users={users} />
-		</div>
+		</Container>
 	);
 };
+const Container = styled.div`
+	padding: 3.2rem
+`
