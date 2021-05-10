@@ -4,7 +4,7 @@ import { useState } from "react";
  * @Descripttion: test
  * @Date: 2021-05-09 20:58:34
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 12:49:02
+ * @LastEditTime: 2021-05-10 17:24:47
  */
 interface State<D> {
     error: Error | null;
@@ -17,7 +17,11 @@ const defaultInitialState: State<null> = {
     data: null,
     error: null
 }
-export const useAsync =<D> (initialState?: State<D>)=>{
+const defaultConfig = {
+    throwOnError:false
+}
+export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaultConfig)=>{
+   const config = {...defaultConfig,...initialConfig}
     const [state, setState] = useState<State<D>>({
         ...defaultInitialState,
         ...initialState
@@ -45,6 +49,9 @@ export const useAsync =<D> (initialState?: State<D>)=>{
             })
             .catch(error=>{
                 setError(error)
+                if(config.throwOnError){
+                    return Promise.reject(error)
+                }
                 return error
             })
     }

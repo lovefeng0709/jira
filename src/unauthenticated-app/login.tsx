@@ -2,17 +2,23 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:53:09
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-29 08:07:40
+ * @LastEditTime: 2021-05-10 17:30:44
  */
 
 import { useAuth } from 'context/auth-context';
 import {Form,Input} from 'antd'
 import React from 'react';
 import { LongButton } from 'unauthenticated-app';
-const Login = () => {
+import { useAsync } from 'utils/use-async';
+const Login = ({onError}:{onError:(error:Error)=>void}) => {
 	const {login} = useAuth()
-    const handleSubmit=(values:{username:string,password:string})=>{
-		login(values)
+	const {run,isLoading} = useAsync(undefined, { throwOnError: true })
+    const handleSubmit=async (values:{username:string,password:string})=>{
+		try {
+		   await run(login(values))
+		} catch (error) {
+			onError(error)
+		}
 	}
 	return (
 		<Form onFinish={handleSubmit}>
@@ -22,7 +28,7 @@ const Login = () => {
 			<Form.Item name={'password'}  rules={[{ required: true, message: 'Please input your password!' }]} >
 				<Input placeholder={'密码'} type="password" id="password" />
 			</Form.Item>
-			<LongButton type="primary" htmlType="submit">登录</LongButton>
+			<LongButton loading={isLoading} type="primary"  htmlType="submit">登录</LongButton>
 		</Form>
 	);
 };

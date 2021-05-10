@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-27 21:46:26
  * @LastEditors: love-coding
- * @LastEditTime: 2021-04-28 14:26:40
+ * @LastEditTime: 2021-05-10 15:09:55
  */
 // 定义一些函数 帮助操控jwt的token
 
@@ -28,7 +28,7 @@ export const login = (data: { username: string; password: string }) => {
 		if (response.ok) {
 			return handleUserResponse(await response.json());
 		} else {
-			return Promise.reject(data);
+			return Promise.reject(await response.json());
 		}
 	});
 };
@@ -43,7 +43,7 @@ export const register = (data: { username: string; password: string }) => {
 		if (response.ok) {
 			return handleUserResponse(await response.json());
 		} else {
-			return Promise.reject(data);
+			return Promise.reject(await response.json());
 		}
 	});
 };
