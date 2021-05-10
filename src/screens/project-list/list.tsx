@@ -2,13 +2,13 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-09 13:54:10
+ * @LastEditTime: 2021-05-10 11:27:06
  */
 import React from 'react';
 import { User } from './search-panel';
-import {Table} from 'antd'
+import {Table, TableProps} from 'antd'
 import dayjs from 'dayjs'
-interface Project {
+export interface Project {
 	id: string;
 	name: string;
 	personId: string;
@@ -16,12 +16,11 @@ interface Project {
 	organization: string;
 	created: number;
 }
-interface ListProps {
-	list:Project[],
+interface ListProps extends TableProps<Project>{
 	users:User[]
 }
 
-export const List = ({ list, users }:ListProps) => {
+export const List = ({  users,...props }:ListProps) => {
 	const columns = [
 	      {
 			title: '名称',
@@ -46,6 +45,6 @@ export const List = ({ list, users }:ListProps) => {
 	         rowKey={"id"}
 	         pagination={false} 
 			 columns={columns} 
-			 dataSource={list}
+			 {...props}
 			 />
 };
