@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:21
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 17:40:07
+ * @LastEditTime: 2021-05-11 19:20:18
  */
 import { ProjectListScreen } from 'screens/project-list';
 import * as React from 'react';
@@ -11,7 +11,7 @@ import styled from '@emotion/styled';
 import { Row } from 'components/lib';
 import {ReactComponent as Softwarelogo}  from 'assets/software-logo.svg'
 import { Button, Dropdown, Menu } from 'antd';
-import { useDocumentTitle } from 'utils';
+import { resetRoute, useDocumentTitle } from 'utils';
 import { Navigate, Route, Routes } from "react-router";
 import {BrowserRouter as Router } from 'react-router-dom';
 import ProjectScreen from 'screens/project';
@@ -31,6 +31,7 @@ export const AuthenticatedApp = () => {
 						path={"/projects/:projectId/*"}
 						element={<ProjectScreen />}
 						/>
+						<Navigate to={'/projects'}/>
 					</Routes>
 				</Router>
 			</Main>
@@ -41,7 +42,9 @@ const PageHeader = () =>{
 	const { logout,user } = useAuth();
 	return <Header between={true}>
 				<HeaderLeft gap={true}>
-					<Softwarelogo width={"18rem"} color={'rgb(38,132,255)'}/>
+					<Button type={'link'} onClick={resetRoute}>
+					  <Softwarelogo width={"18rem"} color={'rgb(38,132,255)'}/>
+					</Button>
 					<h3>项目</h3>
 					<h3>用户</h3>
 				</HeaderLeft>
