@@ -2,9 +2,9 @@
  * @Descripttion: test
  * @Date: 2021-04-26 22:06:28
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 12:06:36
+ * @LastEditTime: 2021-05-11 13:01:18
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 // unknown 不能赋值给任何类型 也不能在它上读取方法
 export const isFalsy = (value: unknown): boolean => (value === 0 ? false : !value);
 export const isVoid = (value: unknown): boolean => value === undefined||value === null||value===''
@@ -66,7 +66,7 @@ export const useArray = <T>(initialValue: T[]) => {
 	};
 };
 export const useDocumentTitle = (title: string,keepOnUnmount=true) =>{
-	const oldTitle = document.title;
+	const oldTitle = useRef(document.title).current;
 	useEffect(() => {
 		document.title = title;
 	}, [title]);
@@ -76,5 +76,5 @@ export const useDocumentTitle = (title: string,keepOnUnmount=true) =>{
 				document.title = oldTitle
 			}
 		}
-	}, []);
+	}, [keepOnUnmount,oldTitle]);
 }
