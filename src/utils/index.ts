@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 22:06:28
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-09 17:50:31
+ * @LastEditTime: 2021-05-11 12:06:36
  */
 import { useState, useEffect } from 'react';
 // unknown 不能赋值给任何类型 也不能在它上读取方法
@@ -65,3 +65,16 @@ export const useArray = <T>(initialValue: T[]) => {
 		add: (item: T) => setValue([ ...value, item ])
 	};
 };
+export const useDocumentTitle = (title: string,keepOnUnmount=true) =>{
+	const oldTitle = document.title;
+	useEffect(() => {
+		document.title = title;
+	}, [title]);
+	useEffect(() => {
+		return ()=>{
+			if(!keepOnUnmount){
+				document.title = oldTitle
+			}
+		}
+	}, []);
+}

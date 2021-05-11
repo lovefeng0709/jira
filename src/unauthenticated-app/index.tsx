@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:58
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 15:05:38
+ * @LastEditTime: 2021-05-11 11:42:30
  */
 import React, { useState } from 'react';
 import Login from './login';
@@ -12,11 +12,17 @@ import styled from '@emotion/styled'
 import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
+import { useDocumentTitle } from 'utils';
+//import {Helmet} from "react-helmet";
 export const UnauthenticatedAPP = () => {
 	const [ isRegister, setIsRegister ] = useState(false);
     const [error, setError] = useState<Error|null>(null);
+	useDocumentTitle('请登录注册以继续')
 	return (
 		<Container>
+			 {/* <Helmet>
+                <title>jira项目管理系统</title>
+            </Helmet> */}
 			<Header/>
 			<Background/>
 			<ShadowCard>

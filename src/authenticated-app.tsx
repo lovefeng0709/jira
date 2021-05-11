@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:21
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 20:46:40
+ * @LastEditTime: 2021-05-11 12:07:08
  */
 import { ProjectListScreen } from 'screens/project-list';
 import * as React from 'react';
@@ -11,8 +11,10 @@ import styled from '@emotion/styled';
 import { Row } from 'components/lib';
 import {ReactComponent as Softwarelogo}  from 'assets/software-logo.svg'
 import { Button, Dropdown, Menu } from 'antd';
+import { useDocumentTitle } from 'utils';
 export const AuthenticatedApp = () => {
 	const { logout,user } = useAuth();
+	useDocumentTitle('项目列表',false);
 	return (
 		<Container>
 			<Header between={true}>
