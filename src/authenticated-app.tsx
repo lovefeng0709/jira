@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:21
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 12:07:08
+ * @LastEditTime: 2021-05-11 17:40:07
  */
 import { ProjectListScreen } from 'screens/project-list';
 import * as React from 'react';
@@ -12,12 +12,34 @@ import { Row } from 'components/lib';
 import {ReactComponent as Softwarelogo}  from 'assets/software-logo.svg'
 import { Button, Dropdown, Menu } from 'antd';
 import { useDocumentTitle } from 'utils';
+import { Navigate, Route, Routes } from "react-router";
+import {BrowserRouter as Router } from 'react-router-dom';
+import ProjectScreen from 'screens/project';
+
 export const AuthenticatedApp = () => {
-	const { logout,user } = useAuth();
+	
 	useDocumentTitle('项目列表',false);
 	return (
 		<Container>
-			<Header between={true}>
+			<PageHeader />
+			<Main>
+				 {/* <ProjectListScreen /> */}
+				<Router>
+					<Routes>   
+						<Route path={"/projects"} element={<ProjectListScreen />} />
+						<Route
+						path={"/projects/:projectId/*"}
+						element={<ProjectScreen />}
+						/>
+					</Routes>
+				</Router>
+			</Main>
+		</Container>
+	);
+};
+const PageHeader = () =>{
+	const { logout,user } = useAuth();
+	return <Header between={true}>
 				<HeaderLeft gap={true}>
 					<Softwarelogo width={"18rem"} color={'rgb(38,132,255)'}/>
 					<h3>项目</h3>
@@ -35,12 +57,7 @@ export const AuthenticatedApp = () => {
 					</Dropdown>
 				</HeaderRight>
 			</Header>
-			<Main>
-				<ProjectListScreen />
-			</Main>
-		</Container>
-	);
-};
+}
 const Container = styled.div`
   display: grid;
   grid-template-rows: 6rem 1fr;

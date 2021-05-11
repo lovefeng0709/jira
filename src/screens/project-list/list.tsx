@@ -2,12 +2,13 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 11:27:06
+ * @LastEditTime: 2021-05-11 17:30:21
  */
 import React from 'react';
 import { User } from './search-panel';
 import {Table, TableProps} from 'antd'
 import dayjs from 'dayjs'
+import {  Link } from 'react-router-dom';
 export interface Project {
 	id: string;
 	name: string;
@@ -24,8 +25,10 @@ export const List = ({  users,...props }:ListProps) => {
 	const columns = [
 	      {
 			title: '名称',
-			dataIndex:'name',
-			sorter:(a:Project,b:Project)=>a.name.localeCompare(b.name)
+			sorter:(a:Project,b:Project)=>a.name.localeCompare(b.name),
+			render(value:string,project:Project){
+				return <Link to={String(project.id)}>{project.name}</Link>
+			}
 	      },
 		  {
 			title: '部门',
