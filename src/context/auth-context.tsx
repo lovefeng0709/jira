@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 10:39:17
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 20:07:27
+ * @LastEditTime: 2021-05-29 20:29:21
  */
 import React, { ReactNode, useEffect } from 'react';
 import * as auth from 'auth-provider';
@@ -45,7 +45,9 @@ export const AuthProvider = ({children}:{ children:ReactNode}) => {
     
     useEffect(() => {
        run(bootstrapUser())
+       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    
     if(isIdle||isLoading){
         return <FullPageLoading />
     }

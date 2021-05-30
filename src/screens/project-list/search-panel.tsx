@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:42:15
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-09 13:40:19
+ * @LastEditTime: 2021-05-30 16:04:50
  */
 
 /* @jsxImportSource @emotion/react */
@@ -50,7 +50,7 @@ export const SearchPanel = ({ param, users, setParam }:SearchPanelProps) => {
 				     >
 					  <Select.Option value="">负责人</Select.Option >
 					  {users.map((user) => (
-						<Select.Option  value={user.id} key={user.id}>
+						<Select.Option  value={String(user.id)} key={user.id}>
 							{user.name}
 						</Select.Option >
 					   ))}

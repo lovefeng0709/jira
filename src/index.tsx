@@ -2,8 +2,9 @@
  * @Descripttion: test
  * @Date: 2021-04-26 15:53:01
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-09 18:19:01
+ * @LastEditTime: 2021-05-29 18:16:07
  */
+import './wdyr';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
