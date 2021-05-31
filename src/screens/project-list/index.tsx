@@ -2,30 +2,27 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:39:11
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-30 16:48:52
+ * @LastEditTime: 2021-05-31 14:43:48
  */
 import React from 'react';
 import { List} from './list';
 import { SearchPanel } from './search-panel';
-import {useDebounce} from 'utils';
+import {useDebounce, useDocumentTitle} from 'utils';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
-import { useUrlQueryParam } from 'utils/url';
+import { useProjectsSearchParams } from './util';
 
 
 export const ProjectListScreen = () => {
-	
+	useDocumentTitle('项目列表',false);
 	//const [keys] = useState<('name'|'personId')[]>(['name', 'personId'])
-	const [param,setParam]= useUrlQueryParam(['name', 'personId'])
-	// useDebounce 自定义hook
-	const debounceParam = useDebounce(param,500)
-
-	const {isLoading,error,data:list} = useProjects(debounceParam)
+	// useDebounce 自定义hooks
+	const [param,setParam] = useProjectsSearchParams()
+	const {isLoading,error,data:list} = useProjects(useDebounce(param,200))
 	const {data:users} = useUsers()
 	
-
 	return (
 		<Container>
 			<h1>项目列表</h1>

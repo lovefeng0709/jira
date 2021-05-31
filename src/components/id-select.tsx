@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-05-30 17:57:33
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-30 20:14:53
+ * @LastEditTime: 2021-05-31 15:01:14
  */
 import { Raw } from "types";
 import * as React from 'react';
@@ -24,7 +24,7 @@ export interface IdSelectProps extends Omit<SelectProps, 'value'|'onChange'|'opt
 const IdSelect = (props:IdSelectProps) => {
     const {value, onChange,defaultOptionName,options,...restProps} = props
     return <Select 
-            value={toNumber(value)}
+            value={options?.length?toNumber(value):0}
             onChange={value=>onChange(toNumber(value)||undefined)}
             {...restProps}
             >

@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 17:30:21
+ * @LastEditTime: 2021-05-31 14:26:21
  */
 import React from 'react';
 import { User } from './search-panel';
@@ -10,9 +10,9 @@ import {Table, TableProps} from 'antd'
 import dayjs from 'dayjs'
 import {  Link } from 'react-router-dom';
 export interface Project {
-	id: string;
+	id: number;
 	name: string;
-	personId: string;
+	personId: number;
 	pin: boolean;
 	organization: string;
 	created: number;
