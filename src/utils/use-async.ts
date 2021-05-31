@@ -4,7 +4,7 @@ import { useState } from "react";
  * @Descripttion: test
  * @Date: 2021-05-09 20:58:34
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 17:24:47
+ * @LastEditTime: 2021-05-31 20:55:29
  */
 interface State<D> {
     error: Error | null;
@@ -26,6 +26,11 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
         ...defaultInitialState,
         ...initialState
     });
+    // 刷新操作
+    // useState直接传入函数的含义是：惰性初始化；所以，要用useState保存函数，不能直接传入函数
+    const [retry,setRetry] = useState(()=>()=>{
+
+    })
     const setError = (error: Error)=>setState({
         error,
         stat:'error',
@@ -37,10 +42,16 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
         stat: 'success'
     })
     // run 用于触发异步请求
-    const run =(promise:Promise<D>)=>{
+    const run =(promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
         if(!promise||!promise.then){
             throw new Error('请传入 Promise 类型数据')
         }
+        //
+        setRetry(()=>()=>{
+            if(runConfig?.retry){
+                run(runConfig?.retry(),runConfig)
+            }
+        })
         setState({...state,stat:'loading'})
         return promise
             .then(data=>{
@@ -62,6 +73,7 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
         isSuccess: state.stat === 'success',
         run,
         setData,
+        retry,
         setError,
         ...state
     }

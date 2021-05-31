@@ -2,11 +2,11 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:42:15
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-31 14:54:39
+ * @LastEditTime: 2021-05-31 15:56:58
  */
 
 /* @jsxImportSource @emotion/react */
-import { Form, Input, Select } from 'antd';
+import { Form, Input} from 'antd';
 import { UserSelect } from 'components/user-select';
 import React from 'react';
 import { Project } from './list';

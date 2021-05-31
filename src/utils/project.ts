@@ -1,3 +1,9 @@
+/*
+ * @Descripttion: test
+ * @Date: 2021-05-10 12:45:00
+ * @LastEditors: love-coding
+ * @LastEditTime: 2021-05-31 21:24:54
+ */
 
 
 import { useEffect } from "react";
@@ -9,12 +15,37 @@ import { useAsync } from "./use-async";
 export const useProjects = (params?: Partial<Project>)=>{
     const client = useHttp();
     const {run,...result} = useAsync<Project[]>()
+	const fetchProjects = ()=> client('projects',{data:cleanObject(params||{})})
+
     useEffect(
 		() => {
-			run(client('projects',{data:cleanObject(params||{})}))	
+			run(fetchProjects(),{retry:fetchProjects})	
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ params ]
 	);
     return result
+}
+
+export const useEditProject = () => {
+	const {run,...asyncResult} = useAsync()
+	const client = useHttp()
+	const mutate = (params:Partial<Project>)=>{
+	  return run(client(`projects/${params.id}`,{data:params,method: 'PATCH'}))
+	} 
+	return { 
+		mutate,
+		...asyncResult
+	}
+}
+export const useAddProject = () => {
+	const {run,...asyncResult} = useAsync()
+	const client = useHttp()
+	const mutate = (params:Partial<Project>)=>{
+		run(client(`projects/${params.id}`,{data:params,method: 'POST'}))
+	} 
+	return { 
+		mutate,
+		...asyncResult
+	}
 }

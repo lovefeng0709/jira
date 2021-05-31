@@ -2,13 +2,15 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-31 14:26:21
+ * @LastEditTime: 2021-05-31 21:25:09
  */
 import React from 'react';
 import { User } from './search-panel';
 import {Table, TableProps} from 'antd'
 import dayjs from 'dayjs'
 import {  Link } from 'react-router-dom';
+import { Pin } from 'components/pin';
+import { useEditProject } from 'utils/project';
 export interface Project {
 	id: number;
 	name: string;
@@ -18,11 +20,22 @@ export interface Project {
 	created: number;
 }
 interface ListProps extends TableProps<Project>{
-	users:User[]
+	users:User[],
+	refresh?:()=>void;
 }
 
 export const List = ({  users,...props }:ListProps) => {
+	const {mutate} = useEditProject()
+	// 柯里化
+	const pinProject = (id: number)=>(pin: boolean)=> mutate({id,pin}).then(props.refresh)
 	const columns = [
+		 {
+			 title:<Pin checked={true} disabled={true}/>,
+			 render(value:string,project:Project){
+				//  (pin)=>pinProject(project.id)(pin)  === pinProject(project.id)
+				 return <Pin checked={project.pin} onCheckedChange={pinProject(project.id)}/>
+			 }
+		 },
 	      {
 			title: '名称',
 			sorter:(a:Project,b:Project)=>a.name.localeCompare(b.name),
