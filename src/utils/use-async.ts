@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from "utils";
 
 /*
  * @Descripttion: test
  * @Date: 2021-05-09 20:58:34
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-01 10:51:41
+ * @LastEditTime: 2021-06-01 16:33:39
  */
 interface State<D> {
     error: Error | null;
@@ -32,18 +32,18 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
     const [retry,setRetry] = useState(()=>()=>{
     })
     const mountedRef = useMountedRef()
-    const setError = (error: Error)=>setState({
+    const setError = useCallback((error: Error)=>setState({
         error,
         stat:'error',
         data: null
-    })
-    const setData = (data: D)=>setState({
+    }),[])
+    const setData = useCallback((data: D)=>setState({
         error:null,
         data:data,
         stat: 'success'
-    })
+    }),[])
     // run 用于触发异步请求
-    const run =(promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
+    const run = useCallback((promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
         if(!promise||!promise.then){
             throw new Error('请传入 Promise 类型数据')
         }
@@ -53,7 +53,7 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
                 run(runConfig?.retry(),runConfig)
             }
         })
-        setState({...state,stat:'loading'})
+        setState(preState=>({...preState,stat:'loading'}))
         return promise
             .then(data=>{
                 if(mountedRef.current)
@@ -67,7 +67,7 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
                 }
                 return error
             })
-    }
+    },[config.throwOnError,mountedRef,setData,setError])
     return { 
         isIdle: state.stat === 'idle',
         isLoading : state.stat === 'loading',

@@ -2,9 +2,9 @@
  * @Descripttion: test
  * @Date: 2021-04-26 22:06:28
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-01 10:52:18
+ * @LastEditTime: 2021-06-01 12:49:27
  */
-import React, { useState, useEffect, useRef } from 'react';
+import   { useState, useEffect, useRef } from 'react';
 // unknown 不能赋值给任何类型 也不能在它上读取方法
 export const isFalsy = (value: unknown): boolean => (value === 0 ? false : !value);
 export const isVoid = (value: unknown): boolean => value === undefined||value === null||value===''

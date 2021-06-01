@@ -8,7 +8,7 @@ import { useAsync } from "./use-async";
  * @Descripttion: test
  * @Date: 2021-05-10 14:13:37
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 14:16:17
+ * @LastEditTime: 2021-06-01 16:34:39
  */
 export const useUsers = (params?:Partial<User>) =>{
     const client = useHttp();
@@ -17,8 +17,8 @@ export const useUsers = (params?:Partial<User>) =>{
 		() => {
 			run(client('users',{data:cleanObject(params||{})}))	
 		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[ params ]
+		
+		[ params ,client, run]
 	);
     return result
 }
