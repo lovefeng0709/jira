@@ -2,9 +2,9 @@
  * @Descripttion: test
  * @Date: 2021-04-26 22:06:28
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 19:20:08
+ * @LastEditTime: 2021-06-01 10:52:18
  */
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // unknown 不能赋值给任何类型 也不能在它上读取方法
 export const isFalsy = (value: unknown): boolean => (value === 0 ? false : !value);
 export const isVoid = (value: unknown): boolean => value === undefined||value === null||value===''
@@ -80,3 +80,16 @@ export const useDocumentTitle = (title: string,keepOnUnmount=true) =>{
 }
 
 export const resetRoute = () => window.location.href = window.location.origin
+/**
+ * 返回组件的加载状态，如果还没挂载或者已经卸载，返回false, 反之 返回true
+ */
+export const useMountedRef = ()=>{
+	const mountedRef = useRef(false)
+	useEffect(() =>{
+		mountedRef.current = true
+		return ()=>{
+			mountedRef.current = false
+		}
+	})
+	return mountedRef
+}

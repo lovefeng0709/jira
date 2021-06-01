@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useMountedRef } from "utils";
 
 /*
  * @Descripttion: test
  * @Date: 2021-05-09 20:58:34
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-31 20:55:29
+ * @LastEditTime: 2021-06-01 10:51:41
  */
 interface State<D> {
     error: Error | null;
@@ -29,8 +30,8 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
     // 刷新操作
     // useState直接传入函数的含义是：惰性初始化；所以，要用useState保存函数，不能直接传入函数
     const [retry,setRetry] = useState(()=>()=>{
-
     })
+    const mountedRef = useMountedRef()
     const setError = (error: Error)=>setState({
         error,
         stat:'error',
@@ -55,6 +56,7 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
         setState({...state,stat:'loading'})
         return promise
             .then(data=>{
+                if(mountedRef.current)
                 setData(data)
                 return data
             })
