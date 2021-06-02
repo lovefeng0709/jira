@@ -2,15 +2,14 @@
  * @Descripttion: test
  * @Date: 2021-06-01 21:04:05
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-02 13:17:58
+ * @LastEditTime: 2021-06-02 16:26:07
  */
 import styled from '@emotion/styled';
-import { Button, Divider, List, Popover, Typography } from 'antd';
+import {  Divider, List, Popover, Typography } from 'antd';
 import * as React from 'react';
 import { useProjects } from 'utils/project';
-import { ButtonNopadding } from './lib';
 
-export const ProjectPopover = (props:{setProjectModalOpen:(isOpen:boolean)=>void}) =>{
+export const ProjectPopover = (props:{projectButton:JSX.Element}) =>{
     const {data:projects,isLoading} = useProjects()
     const pinnedProjects = projects?.filter(project => project.pin)
     const content = <ContentContainer>
@@ -23,7 +22,9 @@ export const ProjectPopover = (props:{setProjectModalOpen:(isOpen:boolean)=>void
           }  
         </List>
         <Divider/>
-        <ButtonNopadding type="link" onClick={()=>props.setProjectModalOpen(true)}>创建项目</ButtonNopadding>
+       {
+           props.projectButton
+       }
     </ContentContainer>
     return <Popover placement="bottom" content={content}>
        <span> 项目</span>

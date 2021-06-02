@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-02 13:35:02
+ * @LastEditTime: 2021-06-02 16:24:51
  */
 import React from 'react';
 import { User } from './search-panel';
@@ -23,7 +23,7 @@ export interface Project {
 interface ListProps extends TableProps<Project>{
 	users:User[],
 	refresh?:()=>void;
-	setProjectModalOpen:(isOpen:boolean)=>void;
+	projectButton:JSX.Element
 }
 
 export const List = ({  users,...props }:ListProps) => {
@@ -63,7 +63,7 @@ export const List = ({  users,...props }:ListProps) => {
 				return <Dropdown overlay={
 					<Menu>
 						<Menu.Item key="edit">
-							<ButtonNopadding type="link" onClick={()=>props.setProjectModalOpen(true)}>编辑</ButtonNopadding>
+							{props.projectButton}
 						</Menu.Item>
 					</Menu>
 				}>
