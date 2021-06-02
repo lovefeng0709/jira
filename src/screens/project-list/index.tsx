@@ -2,20 +2,21 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:39:11
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-01 10:46:56
+ * @LastEditTime: 2021-06-02 13:22:54
  */
 import React from 'react';
 import { List} from './list';
 import { SearchPanel } from './search-panel';
 import {useDebounce, useDocumentTitle} from 'utils';
 import styled from '@emotion/styled';
-import {  Typography } from 'antd';
+import {  Button,  Typography } from 'antd';
 import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useProjectsSearchParams } from './util';
+import { Row } from 'components/lib';
 
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props:{setProjectModalOpen:(isOpen:boolean)=>void}) => {
 	useDocumentTitle('项目列表',false);
 	//const [keys] = useState<('name'|'personId')[]>(['name', 'personId'])
 	// useDebounce 自定义hooks
@@ -24,10 +25,14 @@ export const ProjectListScreen = () => {
 	const {data:users} = useUsers()
 	return (
 		<Container>
-			<h1>项目列表</h1>
+			<Row between={true}>
+			  <h1>项目列表</h1>
+			  <Button onClick={()=>props.setProjectModalOpen(true)}>创建项目</Button>
+			</Row>
+			
 			<SearchPanel param={param} users={users||[]} setParam={setParam} />
 			{error? <Typography.Text type="danger">{error.message}</Typography.Text>:null}
-			<List refresh={retry} loading={isLoading} dataSource={list||[]} users={users||[]} />
+			<List setProjectModalOpen={props.setProjectModalOpen} refresh={retry} loading={isLoading} dataSource={list||[]} users={users||[]} />
 		</Container>
 	);
 };

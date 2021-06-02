@@ -2,15 +2,16 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-31 21:25:09
+ * @LastEditTime: 2021-06-02 13:35:02
  */
 import React from 'react';
 import { User } from './search-panel';
-import {Table, TableProps} from 'antd'
+import {Dropdown, Menu, Table, TableProps} from 'antd'
 import dayjs from 'dayjs'
 import {  Link } from 'react-router-dom';
 import { Pin } from 'components/pin';
 import { useEditProject } from 'utils/project';
+import { ButtonNopadding } from 'components/lib';
 export interface Project {
 	id: number;
 	name: string;
@@ -22,6 +23,7 @@ export interface Project {
 interface ListProps extends TableProps<Project>{
 	users:User[],
 	refresh?:()=>void;
+	setProjectModalOpen:(isOpen:boolean)=>void;
 }
 
 export const List = ({  users,...props }:ListProps) => {
@@ -55,7 +57,20 @@ export const List = ({  users,...props }:ListProps) => {
 		  {
 			title: '创建时间',
 		     render:(value:string,project:Project)=>(<span>{ project.created? dayjs(project.created).format("YYYY-MM-DD"):'无'}</span>)
-	      }
+	      },
+		  {
+			  render:(value:string,project:Project)=>{
+				return <Dropdown overlay={
+					<Menu>
+						<Menu.Item key="edit">
+							<ButtonNopadding type="link" onClick={()=>props.setProjectModalOpen(true)}>编辑</ButtonNopadding>
+						</Menu.Item>
+					</Menu>
+				}>
+					<ButtonNopadding  type="link">...</ButtonNopadding>
+				</Dropdown>
+			  }
+		  }
         ]
 	return <Table 
 	         rowKey={"id"}

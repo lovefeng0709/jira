@@ -2,10 +2,10 @@
  * @Descripttion: test
  * @Date: 2021-05-08 20:59:19
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 18:50:36
+ * @LastEditTime: 2021-06-02 10:48:45
  */
 import styled from '@emotion/styled';
-import { Spin, Typography } from 'antd';
+import { Button, Spin, Typography } from 'antd';
 import { DevTools } from 'jira-dev-tool';
 import React from 'react';
 
@@ -38,3 +38,7 @@ export const FullPageErrorFallback = ({error}:{ error:Error| null}) =><FullPage>
     <DevTools/>
     <Typography.Text type="danger">{error?.message}</Typography.Text>
 </FullPage>
+
+export const ButtonNopadding = styled(Button)`
+   padding: 0;
+`

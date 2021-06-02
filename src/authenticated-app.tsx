@@ -2,31 +2,33 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:21
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 19:20:18
+ * @LastEditTime: 2021-06-02 13:21:48
  */
 import { ProjectListScreen } from 'screens/project-list';
 import * as React from 'react';
 import { useAuth } from 'context/auth-context';
 import styled from '@emotion/styled';
-import { Row } from 'components/lib';
+import { ButtonNopadding, Row } from 'components/lib';
 import {ReactComponent as Softwarelogo}  from 'assets/software-logo.svg'
 import { Button, Dropdown, Menu } from 'antd';
 import { resetRoute, useDocumentTitle } from 'utils';
 import { Navigate, Route, Routes } from "react-router";
 import {BrowserRouter as Router } from 'react-router-dom';
 import ProjectScreen from 'screens/project';
+import { ProjectModal } from 'screens/project-list/project-modal';
+import { ProjectPopover } from 'components/project-popover';
 
 export const AuthenticatedApp = () => {
-	
+	const [projectModalOpen,setProjectModalOpen] = React.useState(false);
 	useDocumentTitle('项目列表',false);
 	return (
 		<Container>
-			<PageHeader />
+			<PageHeader  setProjectModalOpen={setProjectModalOpen}/>
 			<Main>
 				 {/* <ProjectListScreen /> */}
 				<Router>
 					<Routes>   
-						<Route path={"/projects"} element={<ProjectListScreen />} />
+						<Route path={"/projects"} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen}/>} />
 						<Route
 						path={"/projects/:projectId/*"}
 						element={<ProjectScreen />}
@@ -35,31 +37,36 @@ export const AuthenticatedApp = () => {
 					</Routes>
 				</Router>
 			</Main>
+			<ProjectModal projectModalOpen={projectModalOpen} onClose={()=>setProjectModalOpen(false)}/>
 		</Container>
 	);
 };
-const PageHeader = () =>{
-	const { logout,user } = useAuth();
+const PageHeader = (props:{setProjectModalOpen:(isOpen:boolean)=>void}) =>{
+	
 	return <Header between={true}>
 				<HeaderLeft gap={true}>
-					<Button type={'link'} onClick={resetRoute}>
+					<ButtonNopadding  type={'link'} onClick={resetRoute}>
 					  <Softwarelogo width={"18rem"} color={'rgb(38,132,255)'}/>
-					</Button>
-					<h3>项目</h3>
-					<h3>用户</h3>
+					</ButtonNopadding>
+					<ProjectPopover setProjectModalOpen={props.setProjectModalOpen}/>
+					<span>用户</span>
 				</HeaderLeft>
 				<HeaderRight>
-					<Dropdown overlay={<Menu>
-						<Menu.Item key={'logout'}>
-						<Button type={'link'} onClick={logout}>登出</Button>
-						</Menu.Item>
-					</Menu>}>
-						<Button type={'link'} onClick={e=>e.preventDefault()}>
-							Hi,{user?.name}
-						</Button>
-					</Dropdown>
+					<User/>
 				</HeaderRight>
 			</Header>
+}
+const User = ()=>{
+	const { logout,user } = useAuth();
+	return <Dropdown overlay={<Menu>
+				<Menu.Item key={'logout'}>
+				<Button type={'link'} onClick={logout}>登出</Button>
+				</Menu.Item>
+			</Menu>}>
+				<Button type={'link'} onClick={e=>e.preventDefault()}>
+					Hi,{user?.name}
+				</Button>
+			</Dropdown>
 }
 const Container = styled.div`
   display: grid;
