@@ -1,11 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import { useMountedRef } from "utils";
 
 /*
  * @Descripttion: test
  * @Date: 2021-05-09 20:58:34
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-01 16:33:39
+ * @LastEditTime: 2021-06-04 09:14:02
  */
 interface State<D> {
     error: Error | null;
@@ -21,9 +21,13 @@ const defaultInitialState: State<null> = {
 const defaultConfig = {
     throwOnError:false
 }
+const useSafeDispatch =<T> (dispatch:(...args: T[]) =>void) => {
+    const mountedRef =useMountedRef()
+    return useCallback((...args:T[]) =>(mountedRef.current? dispatch(...args): void 0),[dispatch,mountedRef])
+}
 export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaultConfig)=>{
-   const config = {...defaultConfig,...initialConfig}
-    const [state, setState] = useState<State<D>>({
+    const config = {...defaultConfig,...initialConfig}
+    const [state, dispatch] = useReducer((state:State<D>,action:Partial<State<D>>)=>({...state, ...action}),{
         ...defaultInitialState,
         ...initialState
     });
@@ -31,17 +35,17 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
     // useState直接传入函数的含义是：惰性初始化；所以，要用useState保存函数，不能直接传入函数
     const [retry,setRetry] = useState(()=>()=>{
     })
-    const mountedRef = useMountedRef()
-    const setError = useCallback((error: Error)=>setState({
+    const safeDispatch = useSafeDispatch(dispatch)
+    const setError = useCallback((error: Error)=>safeDispatch({
         error,
         stat:'error',
         data: null
-    }),[])
-    const setData = useCallback((data: D)=>setState({
+    }),[safeDispatch])
+    const setData = useCallback((data: D)=>safeDispatch({
         error:null,
         data:data,
         stat: 'success'
-    }),[])
+    }),[safeDispatch])
     // run 用于触发异步请求
     const run = useCallback((promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
         if(!promise||!promise.then){
@@ -53,10 +57,9 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
                 run(runConfig?.retry(),runConfig)
             }
         })
-        setState(preState=>({...preState,stat:'loading'}))
+        safeDispatch({stat: 'loading'})
         return promise
             .then(data=>{
-                if(mountedRef.current)
                 setData(data)
                 return data
             })
@@ -67,7 +70,7 @@ export const useAsync =<D> (initialState?: State<D>,initialConfig?:typeof defaul
                 }
                 return error
             })
-    },[config.throwOnError,mountedRef,setData,setError])
+    },[config.throwOnError,setData,setError,safeDispatch])
     return { 
         isIdle: state.stat === 'idle',
         isLoading : state.stat === 'loading',
