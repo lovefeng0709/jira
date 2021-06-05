@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:53:09
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 17:30:44
+ * @LastEditTime: 2021-06-05 15:31:59
  */
 
 import { useAuth } from 'context/auth-context';
@@ -10,10 +10,11 @@ import {Form,Input} from 'antd'
 import React from 'react';
 import { LongButton } from 'unauthenticated-app';
 import { useAsync } from 'utils/use-async';
+
 const Login = ({onError}:{onError:(error:Error)=>void}) => {
 	const {login} = useAuth()
 	const {run,isLoading} = useAsync(undefined, { throwOnError: true })
-    const handleSubmit=async (values:{username:string,password:string})=>{
+	const handleSubmit=async (values:{username:string,password:string})=>{
 		try {
 		   await run(login(values))
 		} catch (error) {

@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:39:11
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-02 16:25:51
+ * @LastEditTime: 2021-06-04 17:59:05
  */
 import React from 'react';
 import { List} from './list';
@@ -13,28 +13,31 @@ import {  Typography } from 'antd';
 import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useProjectsSearchParams } from './util';
-import { Row } from 'components/lib';
+import { ButtonNopadding, Row } from 'components/lib';
+import { useDispatch } from 'react-redux';
+import { projectListActions } from './project-list.slice';
 
 
-export const ProjectListScreen = (props:{projectButton:JSX.Element}) => {
+export const ProjectListScreen = () => {
 	useDocumentTitle('项目列表',false);
 	//const [keys] = useState<('name'|'personId')[]>(['name', 'personId'])
 	// useDebounce 自定义hooks
 	const [param,setParam] = useProjectsSearchParams()
 	const {isLoading,error,data:list,retry} = useProjects(useDebounce(param,200))
 	const {data:users} = useUsers()
+	const dispatch = useDispatch()
 	return (
 		<Container>
 			<Row between={true}>
 			  <h1>项目列表</h1>
-			 {
-				 props.projectButton
-			 }
+				<ButtonNopadding  type="link" onClick={()=>dispatch(projectListActions.openProjectModal())}>
+					创建项目
+				</ButtonNopadding>
 			</Row>
 			
 			<SearchPanel param={param} users={users||[]} setParam={setParam} />
 			{error? <Typography.Text type="danger">{error.message}</Typography.Text>:null}
-			<List {...props} refresh={retry} loading={isLoading} dataSource={list||[]} users={users||[]} />
+			<List  refresh={retry} loading={isLoading} dataSource={list||[]} users={users||[]} />
 		</Container>
 	);
 };

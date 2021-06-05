@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:21
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-02 16:22:38
+ * @LastEditTime: 2021-06-04 17:59:30
  */
 import { ProjectListScreen } from 'screens/project-list';
 import * as React from 'react';
@@ -19,16 +19,15 @@ import { ProjectModal } from 'screens/project-list/project-modal';
 import { ProjectPopover } from 'components/project-popover';
 
 export const AuthenticatedApp = () => {
-	const [projectModalOpen,setProjectModalOpen] = React.useState(false);
 	useDocumentTitle('项目列表',false);
 	return (
 		<Container>
-			<PageHeader projectButton = { <ButtonNopadding type="link" onClick={()=>setProjectModalOpen(true)}>创建项目</ButtonNopadding>}/>
+			<PageHeader />
 			<Main>
 				 {/* <ProjectListScreen /> */}
 				<Router>
 					<Routes>   
-						<Route path={"/projects"} element={<ProjectListScreen projectButton = { <ButtonNopadding type="link" onClick={()=>setProjectModalOpen(true)}>创建项目</ButtonNopadding>}/>} />
+						<Route path={"/projects"} element={<ProjectListScreen />} />
 						<Route
 						path={"/projects/:projectId/*"}
 						element={<ProjectScreen />}
@@ -37,18 +36,18 @@ export const AuthenticatedApp = () => {
 					</Routes>
 				</Router>
 			</Main>
-			<ProjectModal projectModalOpen={projectModalOpen} onClose={()=>setProjectModalOpen(false)}/>
+			<ProjectModal />
 		</Container>
 	);
 };
-const PageHeader = (props:{projectButton:JSX.Element}) =>{
+const PageHeader = () =>{
 	
 	return <Header between={true}>
 				<HeaderLeft gap={true}>
 					<ButtonNopadding  type={'link'} onClick={resetRoute}>
 					  <Softwarelogo width={"18rem"} color={'rgb(38,132,255)'}/>
 					</ButtonNopadding>
-					<ProjectPopover {...props}/>
+					<ProjectPopover />
 					<span>用户</span>
 				</HeaderLeft>
 				<HeaderRight>
