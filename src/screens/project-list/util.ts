@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-05-31 14:34:00
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-31 15:02:35
+ * @LastEditTime: 2021-06-06 19:17:16
  */
 import { useMemo } from "react"
 import { useUrlQueryParam } from "utils/url"
@@ -14,4 +14,17 @@ export const useProjectsSearchParams = ()=>{
         useMemo(()=>({...param,personId:Number(param.personId)||undefined}),[param]),
         setParam
      ] as const
+}
+
+export const useProjectModal = ()=>{
+    const [{projectCreate},setProjectCreate] = useUrlQueryParam([
+        'projectCreate'
+    ])
+    const open = ()=> setProjectCreate({projectCreate:true})
+    const close = ()=> setProjectCreate({projectCreate:undefined})
+    return { 
+        projectModalOpen:projectCreate=== 'true',
+        open,
+        close
+     }
 }
