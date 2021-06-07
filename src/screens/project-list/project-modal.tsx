@@ -2,11 +2,11 @@
  * @Descripttion: test
  * @Date: 2021-06-06 20:28:23
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-07 17:40:10
+ * @LastEditTime: 2021-06-07 20:51:46
  */
 import React, { useEffect } from "react";
 import { Button, Drawer, Form, Input, Spin } from "antd";
-import { useProjectModal } from "screens/project-list/util";
+import { useProjectModal, useProjectQueryKey } from "screens/project-list/util";
 import { UserSelect } from "components/user-select";
 import { useAddProject, useEditProject } from "utils/project";
 import { useForm } from "antd/es/form/Form";
@@ -22,7 +22,7 @@ export const ProjectModal = () => {
   } = useProjectModal();
   const useMutateProject = editingProject ? useEditProject : useAddProject;
 
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject();
+  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject(useProjectQueryKey());
   const [form] = useForm();
   const onFinish = (values: any) => {
     mutateAsync({ ...editingProject, ...values }).then(() => {

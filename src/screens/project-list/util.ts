@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-05-31 14:34:00
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-07 14:53:36
+ * @LastEditTime: 2021-06-07 20:56:14
  */
 import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
@@ -17,6 +17,10 @@ export const useProjectsSearchParams = ()=>{
         setParam
      ] as const
 }
+ export const useProjectQueryKey = () =>{
+     const [params]= useProjectsSearchParams()
+    return ['projects',params]
+ }
 
 export const useProjectModal = ()=>{
     const [{projectCreate},setProjectCreate] = useUrlQueryParam([
