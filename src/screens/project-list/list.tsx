@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-06 19:11:05
+ * @LastEditTime: 2021-06-07 14:57:43
  */
 import React from 'react';
 import { User } from './search-panel';
@@ -22,15 +22,15 @@ export interface Project {
 	created: number;
 }
 interface ListProps extends TableProps<Project>{
-	users:User[],
-	refresh?:()=>void
+	users:User[]
 }
 
 export const List = ({  users,...props }:ListProps) => {
-	const {open} = useProjectModal()
+	const {startEdit} = useProjectModal()
 	const {mutate} = useEditProject()
 	// 柯里化
-	const pinProject = (id: number)=>(pin: boolean)=> mutate({id,pin}).then(props.refresh)
+	const pinProject = (id: number)=>(pin: boolean)=> mutate({id,pin})
+	const editProject = (id: number)=> () => startEdit(id)
 	const columns = [
 		 {
 			 title:<Pin checked={true} disabled={true}/>,
@@ -63,11 +63,10 @@ export const List = ({  users,...props }:ListProps) => {
 			  render:(value:string,project:Project)=>{
 				return <Dropdown overlay={
 					<Menu>
-						<Menu.Item key="edit">
-							<ButtonNopadding  type="link" onClick={open}>
-								编辑
-							</ButtonNopadding>
+						<Menu.Item key="edit" onClick={editProject(project.id)}>
+							编辑
 						</Menu.Item>
+						<Menu.Item key="delete">删除</Menu.Item>
 					</Menu>
 				}>
 					<ButtonNopadding  type="link">...</ButtonNopadding>

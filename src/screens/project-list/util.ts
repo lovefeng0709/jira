@@ -2,9 +2,11 @@
  * @Descripttion: test
  * @Date: 2021-05-31 14:34:00
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-06 19:17:16
+ * @LastEditTime: 2021-06-07 14:53:36
  */
 import { useMemo } from "react"
+import { useSearchParams } from "react-router-dom"
+import { useProject } from "utils/project"
 import { useUrlQueryParam } from "utils/url"
 // 项目列表搜索的参数
 export const useProjectsSearchParams = ()=>{
@@ -20,11 +22,20 @@ export const useProjectModal = ()=>{
     const [{projectCreate},setProjectCreate] = useUrlQueryParam([
         'projectCreate'
     ])
+    const [{editingProjectId},setEditingProjectId] = useUrlQueryParam([
+        'editingProjectId'
+    ])
+    const {data:editingProject,isLoading} = useProject(Number(editingProjectId))
+    const [_, setUrlParams] = useSearchParams();
     const open = ()=> setProjectCreate({projectCreate:true})
-    const close = ()=> setProjectCreate({projectCreate:undefined})
+    const close = () => setUrlParams({ projectCreate: "", editingProjectId: "" });
+    const startEdit = (id: number)=>  setEditingProjectId({editingProjectId:id})
     return { 
-        projectModalOpen:projectCreate=== 'true',
+        projectModalOpen:projectCreate=== 'true'|| Boolean(editingProject),
         open,
-        close
+        close,
+        startEdit,
+        editingProject,
+        isLoading
      }
 }

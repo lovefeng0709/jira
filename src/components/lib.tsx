@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-05-08 20:59:19
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-02 10:48:45
+ * @LastEditTime: 2021-06-07 09:29:50
  */
 import styled from '@emotion/styled';
 import { Button, Spin, Typography } from 'antd';
@@ -36,9 +36,18 @@ export const FullPageLoading = ()=> <FullPage>
 
 export const FullPageErrorFallback = ({error}:{ error:Error| null}) =><FullPage>
     <DevTools/>
-    <Typography.Text type="danger">{error?.message}</Typography.Text>
+    <ErrorBox error={error}></ErrorBox>
 </FullPage>
 
 export const ButtonNopadding = styled(Button)`
    padding: 0;
 `
+// 类型守卫 当符合value.message value就是Error类型
+const  isError = (value:any): value is Error => value?.message
+
+export const ErrorBox = ({error}:{ error:unknown}) =>{
+  if(isError(error)){
+    return <Typography.Text type="danger">{error?.message}</Typography.Text>
+  }
+  return null
+}

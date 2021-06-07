@@ -2,50 +2,54 @@
  * @Descripttion: test
  * @Date: 2021-05-10 12:45:00
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-01 16:19:30
+ * @LastEditTime: 2021-06-07 17:01:23
  */
 
 
-import { useCallback, useEffect } from "react";
+import { useQuery,useMutation, useQueryClient } from "react-query";
 import { Project } from "screens/project-list/list";
-import { cleanObject } from "utils";
 import { useHttp } from "./http";
-import { useAsync } from "./use-async";
 
 export const useProjects = (params?: Partial<Project>)=>{
     const client = useHttp();
-    const {run,...result} = useAsync<Project[]>()
-	const fetchProjects = useCallback(()=> client('projects',{data:cleanObject(params||{})}),[params,client])
-
-    useEffect(
-		() => {
-			run(fetchProjects(),{retry:fetchProjects})	
-		},
-		
-		[ params,run, fetchProjects]
-	);
-    return result
+	// useQuery的第一个参数为['projects',params] 就是当params变化时也会重新请求
+   return useQuery<Project[]>(['projects',params],()=> client('projects',{data:params}))
 }
 
 export const useEditProject = () => {
-	const {run,...asyncResult} = useAsync()
 	const client = useHttp()
-	const mutate = (params:Partial<Project>)=>{
-	  return run(client(`projects/${params.id}`,{data:params,method: 'PATCH'}))
-	} 
-	return { 
-		mutate,
-		...asyncResult
-	}
+	const queryClient = useQueryClient()
+	// useMutation()第二个参数中 onSuccess函数 就是更新
+	return useMutation(
+		(params: Partial<Project>)=>client(`projects/${params.id}`,{
+			data:params,
+			method: 'PATCH'
+		 }),{
+			 onSuccess:()=> queryClient.invalidateQueries('projects')
+		 }
+		)
 }
 export const useAddProject = () => {
-	const {run,...asyncResult} = useAsync()
 	const client = useHttp()
-	const mutate = (params:Partial<Project>)=>{
-		run(client(`projects/${params.id}`,{data:params,method: 'POST'}))
-	} 
-	return { 
-		mutate,
-		...asyncResult
-	}
+	const queryClient = useQueryClient()
+	
+	return useMutation(
+		(params: Partial<Project>)=>client(`projects`,{
+			data:params,
+			method: 'POST'
+		}),{
+			onSuccess:()=> queryClient.invalidateQueries('projects')
+		  }
+		)
+}
+export const useProject = (id?:number) => {
+	const client = useHttp()
+	return useQuery<Project>(
+			['project',{id}],
+			()=>client(`projects/${id}`),
+			// 只有id存在才去获取
+			{
+				enabled:Boolean(id)
+			}
+		)
 }

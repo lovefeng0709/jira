@@ -2,17 +2,18 @@
  * @Descripttion: test
  * @Date: 2021-04-28 15:52:58
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 11:42:30
+ * @LastEditTime: 2021-06-07 09:44:07
  */
 import React, { useState } from 'react';
 import Login from './login';
 import Register from './register';
-import {Button, Card, Divider, Typography} from 'antd'
+import {Button, Card, Divider} from 'antd'
 import styled from '@emotion/styled'
 import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
 import { useDocumentTitle } from 'utils';
+import { ErrorBox } from 'components/lib';
 //import {Helmet} from "react-helmet";
 export const UnauthenticatedAPP = () => {
 	const [ isRegister, setIsRegister ] = useState(false);
@@ -27,7 +28,7 @@ export const UnauthenticatedAPP = () => {
 			<Background/>
 			<ShadowCard>
 			<Title>{isRegister? '请注册':'请登录'}</Title>
-			{error? <Typography.Text type="danger">{error.message}</Typography.Text>:null}
+			<ErrorBox error={error}/>
 			{isRegister ? <Register onError={setError} /> : <Login  onError={setError}/>}
 			<Divider/>
 			<Button type={'link'} onClick={() => setIsRegister(!isRegister)}>{isRegister ? '已经有账号了?去登录' : '没有账号？注册新账号'}</Button>	

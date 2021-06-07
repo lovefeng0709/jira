@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 16:34:53
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-01 16:27:56
+ * @LastEditTime: 2021-06-07 15:08:51
  */
 import * as auth from 'auth-provider';
 import { useAuth } from 'context/auth-context';
@@ -48,5 +48,9 @@ export const http = async (endpoint: string, { data, token, headers, ...customCo
 
 export const useHttp = ()=>{
     const {user} = useAuth()
-    return useCallback((...[endpoint,config]:Parameters<typeof http>)=> http(endpoint, { ...config, token: user?.token }),[user?.token])
+	return useCallback(
+		(...[endpoint, config]: Parameters<typeof http>) =>
+		  http(endpoint, { ...config, token: user?.token }),
+		[user?.token]
+	  );
 }
