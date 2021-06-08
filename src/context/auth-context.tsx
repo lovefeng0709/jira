@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-04-28 10:39:17
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-29 20:29:21
+ * @LastEditTime: 2021-06-08 11:25:20
  */
 import React, { ReactNode, useEffect } from 'react';
 import * as auth from 'auth-provider';
@@ -10,6 +10,7 @@ import { User } from 'screens/project-list/search-panel';
 import { http } from 'utils/http';
 import { useAsync } from 'utils/use-async';
 import { FullPageErrorFallback, FullPageLoading } from 'components/lib';
+import { useQueryClient } from 'react-query';
 //初始化user
 const bootstrapUser=async ()=>{
     let user = null;
@@ -38,10 +39,13 @@ interface AuthForm {
 // 函数式编程 point free   user=>setUser(user)  setUser
 export const AuthProvider = ({children}:{ children:ReactNode}) => {
     const {data:user,run,error,isLoading,isIdle,isError,setData:setUser} = useAsync<User|null>()
-	
+	const queryClient =useQueryClient()
     const login = (form: AuthForm) => auth.login(form).then(setUser);
 	const register = (form: AuthForm) => auth.register(form).then(setUser);
-	const logout = () => auth.logout().then(() => setUser(null));
+	const logout = () => auth.logout().then(() => {
+        setUser(null)
+        queryClient.clear()
+    });
     
     useEffect(() => {
        run(bootstrapUser())

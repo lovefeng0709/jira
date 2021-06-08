@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-06-06 20:28:23
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-07 20:51:46
+ * @LastEditTime: 2021-06-08 11:18:49
  */
 import React, { useEffect } from "react";
 import { Button, Drawer, Form, Input, Spin } from "antd";
@@ -30,18 +30,20 @@ export const ProjectModal = () => {
       close();
     });
   };
-
+  const closeModal = ()=>{
+    form.resetFields();
+    close();
+  }
   const title = editingProject ? "编辑项目" : "创建项目";
 
   useEffect(() => {
-    form.resetFields();
     form.setFieldsValue(editingProject);
   }, [editingProject, form]);
 
   return (
     <Drawer
       forceRender={true}
-      onClose={close}
+      onClose={closeModal}
       visible={projectModalOpen}
       width={"100%"}
     >
