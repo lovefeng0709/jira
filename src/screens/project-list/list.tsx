@@ -2,10 +2,10 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:41:03
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-07 21:15:02
+ * @LastEditTime: 2021-06-08 16:05:25
  */
 import React from 'react';
-import { User } from './search-panel';
+import { User } from "../../types/User";
 import {Dropdown, Menu, Modal, Table, TableProps} from 'antd'
 import dayjs from 'dayjs'
 import {  Link } from 'react-router-dom';
@@ -13,14 +13,7 @@ import { Pin } from 'components/pin';
 import { useDeleteProject, useEditProject } from 'utils/project';
 import { ButtonNopadding } from 'components/lib';
 import { useProjectModal, useProjectQueryKey } from './util';
-export interface Project {
-	id: number;
-	name: string;
-	personId: number;
-	pin: boolean;
-	organization: string;
-	created: number;
-}
+import { Project } from '../../types/Project';
 interface ListProps extends TableProps<Project>{
 	users:User[]
 }

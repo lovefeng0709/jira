@@ -2,12 +2,12 @@
  * @Descripttion: test
  * @Date: 2021-05-10 12:45:00
  * @LastEditors: love-coding
- * @LastEditTime: 2021-06-07 21:14:36
+ * @LastEditTime: 2021-06-08 16:04:04
  */
 
 
 import { useQuery,useMutation, QueryKey } from "react-query";
-import { Project } from "screens/project-list/list";
+import { Project } from "types/Project";
 import { useHttp } from "./http";
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-options";
 

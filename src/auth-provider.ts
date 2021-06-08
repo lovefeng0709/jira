@@ -2,11 +2,11 @@
  * @Descripttion: test
  * @Date: 2021-04-27 21:46:26
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-10 15:09:55
+ * @LastEditTime: 2021-06-08 16:05:00
  */
 // 定义一些函数 帮助操控jwt的token
 
-import { User } from 'screens/project-list/search-panel';
+import { User } from "types/User";
 const apiUrl = process.env.REACT_APP_API_URL;
 // 在真实环境中，如果使用firebase或auth0这种第三方auth服务的话，本文件不需要开发者开发
 const localStorageKey = '__auth_provider_token__';

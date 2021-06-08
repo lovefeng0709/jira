@@ -2,7 +2,7 @@
  * @Descripttion: test
  * @Date: 2021-05-11 15:22:54
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 19:09:15
+ * @LastEditTime: 2021-06-08 15:08:36
  */
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,7 @@ const  ProjectScreen = () => {
                     <Route path={'/kanban'} element={<KanbanScreen />} />
                     {/* projects/:projectId/epic */}
                     <Route path={'/epic'} element={<EpicScreen />} />
-                    <Navigate to={window.location.pathname +'/kanban'}/>            
+                    <Navigate to={window.location.pathname +'/kanban'} replace={true}/>            
                 </Routes>
             </div>;
 }

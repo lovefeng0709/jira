@@ -2,22 +2,15 @@
  * @Descripttion: test
  * @Date: 2021-04-26 16:42:15
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-31 15:56:58
+ * @LastEditTime: 2021-06-08 16:04:42
  */
 
 /* @jsxImportSource @emotion/react */
 import { Form, Input} from 'antd';
 import { UserSelect } from 'components/user-select';
 import React from 'react';
-import { Project } from './list';
-export interface User {
-	id: number;
-	name: string;
-	email: string;
-	title: string;
-	organization: string;
-	token: string;
-}
+import { Project } from "../../types/Project";
+import { User } from '../../types/User';
 interface SearchPanelProps {
 	users: User[],
 	param:Partial<Pick<Project,'name'|'personId'>>
