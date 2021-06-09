@@ -2,12 +2,32 @@
  * @Descripttion: test
  * @Date: 2021-05-11 18:39:23
  * @LastEditors: love-coding
- * @LastEditTime: 2021-05-11 18:40:46
+ * @LastEditTime: 2021-06-08 20:53:49
  */
-import * as React from 'react';
+import styled from '@emotion/styled';
+import  React from 'react';
+import { useDocumentTitle } from 'utils';
+import { useKanbans } from 'utils/kanban';
+import { KanbanColumn } from './kanban-column';
+import {   useProjectInUrl } from './util';
  
 const KanbanScreen = () => {
-    return (<div>kanban</div>  );
+    useDocumentTitle('看板列表')
+    const {data:currentProject} = useProjectInUrl()
+    const {data:kanbans} = useKanbans()
+    return <div>
+        <h1>{currentProject?.name}看板</h1>
+        <ColumnsContainer>
+        {
+            kanbans?.map(kanban =><KanbanColumn kanban={kanban} key={kanban.id}/>)
+        }
+        </ColumnsContainer>
+    </div>
 }
+const ColumnsContainer = styled.div`
+    display: flex;
+    overflow: hidden;
+    margin-right: 2rem;
+`
  
 export default KanbanScreen;
