@@ -6,17 +6,18 @@ import taskIcon from 'assets/task.svg';
 import bugIcon from 'assets/bug.svg';
 import styled from '@emotion/styled';
 import { Card } from 'antd';
+import { useTasksSearchParams } from './util';
 const TaskTypeIcon = ({id}:{id:number})=>{
     const {data:taskTypes} = useTaskTypes()
     const name = taskTypes?.find(taskType=>taskType.id===id)?.name
     if(!name){
         return null
     }
-    return <img src={name==='task'?taskIcon:bugIcon}/>
+    return <img src={name==='task'?taskIcon:bugIcon} alt={'img'} />
 }
 export const KanbanColumn = ({kanban}:{ kanban: Kanban})=>{
-    const {data:allTasks} = useTasks()
-    const tasks = allTasks?.filter(task=>task.kanbanId===kanban.id)
+    const { data: allTasks } = useTasks(useTasksSearchParams());
+    const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
     return <Container>
         <h3>{kanban.name}</h3>
         <TasksContainer>
