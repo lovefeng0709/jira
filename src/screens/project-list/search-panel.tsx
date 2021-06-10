@@ -20,8 +20,9 @@ export const SearchPanel = ({ param, users, setParam }:SearchPanelProps) => {
 	return (
 		<Form css={{marginBottom: '2rem'}} layout={'inline'}>
 			<Form.Item>
-				<Input type="text"
-				placeholder={'项目名'}
+				<Input 
+					type="text"
+					placeholder={'项目名'}
 					value={param.name}
 					onChange={(e) => {
 						setParam({
