@@ -47,10 +47,12 @@ const Aside = styled.div`
 const Main = styled.div`
     box-shadow: -5px 0 5px -5px rgb(0,0,0,0.1);
     display: flex;
+    overflow: hidden;
 `
 const Container = styled.div`
     display: grid;
     grid-template-columns: 16rem 1fr;
+    overflow: hidden;
 
 `
 export default ProjectScreen;
