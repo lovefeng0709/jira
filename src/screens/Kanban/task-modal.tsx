@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { Form, Input, Modal } from 'antd'
+import { Button, Form, Input, Modal } from 'antd'
 import { useTasksModal, useTasksQueryKey } from './util'
-import { useEditTask } from 'utils/task'
+import { useDeleteTask, useEditTask } from 'utils/task'
 import { UserSelect } from 'components/user-select'
 import { TaskTypeSelect } from 'components/task-type-select'
 const layout = {
@@ -12,6 +12,7 @@ export const TaskModal = () => {
     const [form] = Form.useForm()
     const { editingTaskId, editingTask, close } = useTasksModal()
     const { mutateAsync: editTask, isLoading: editLoading } = useEditTask(useTasksQueryKey())
+    const {mutateAsync:deleteTask} = useDeleteTask(useTasksQueryKey())
     const onCancel = () => {
         close()
         form.resetFields()
@@ -20,7 +21,17 @@ export const TaskModal = () => {
         await editTask({ ...editingTask, ...form.getFieldsValue() })
         close()
     }
-
+    const startDelete = () => {
+        close()
+        Modal.confirm({
+            okText:'确定',
+            cancelText:'取消',
+            title:'确定删除任务？',
+            onOk(){
+             return  deleteTask({id:Number(editingTaskId)})
+            }
+        })
+    }
     useEffect(() => {
         form.setFieldsValue(editingTask)
     }, [form, editingTask]);
@@ -37,5 +48,8 @@ export const TaskModal = () => {
                 <TaskTypeSelect defaultOptionName={'类型'} />
             </Form.Item>
         </Form>
+        <div style={{textAlign: 'right'}}>
+            <Button type="default" onClick={startDelete}>删除</Button>
+        </div>
     </Modal>
 }

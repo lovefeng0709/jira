@@ -5,11 +5,13 @@ import { useTaskTypes } from 'utils/task-type';
 import taskIcon from 'assets/task.svg';
 import bugIcon from 'assets/bug.svg';
 import styled from '@emotion/styled';
-import { Card } from 'antd';
-import { useTasksModal, useTasksSearchParams } from './util';
+import { Button, Card, Dropdown, Menu, Modal } from 'antd';
+import { useKanbansQueryKey, useTasksModal, useTasksSearchParams } from './util';
 import { CreateTask } from './create-task';
 import { Task } from 'types/task';
 import { Mark } from 'components/mark';
+import { useDeleteKanban } from 'utils/kanban';
+import { Row } from 'components/lib';
 const TaskTypeIcon = ({id}:{id:number})=>{
     const {data:taskTypes} = useTaskTypes()
     const name = taskTypes?.find(taskType=>taskType.id===id)?.name
@@ -22,7 +24,9 @@ const TaskCard = ({task}:{task:Task})=>{
     const {startEdit} = useTasksModal()
     const {name:keyWord} = useTasksSearchParams()
     return <Card onClick={()=>startEdit(task.id)} style={{marginBottom: '0.5rem',cursor: 'pointer'}} key={task.id}>
-            <Mark name={task.name} keyWord={keyWord}/>
+           <p>
+             <Mark name={task.name} keyWord={keyWord}/>
+           </p>
             <TaskTypeIcon id={task.typeId}/>
         </Card>
 }
@@ -32,13 +36,38 @@ export const KanbanColumn = ({kanban}:{ kanban: Kanban})=>{
     const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
     
     return <Container>
-        <h3>{kanban.name}</h3>
+        <Row  between>
+            <h3>{kanban.name}</h3>
+            <More kanban={kanban}/>
+        </Row>
         <TasksContainer>
             {tasks?.map(task=><TaskCard task={task} />)
             }
             <CreateTask kanbanId={kanban.id} />
         </TasksContainer>
     </Container>
+}
+
+const More = ({kanban}:{kanban: Kanban})=>{
+    const {mutateAsync:deleteKanban} = useDeleteKanban(useKanbansQueryKey())
+    const startDelete = ()=>{
+        Modal.confirm({
+            okText:'确定',
+            cancelText:'取消',
+            title:'确定删除看板？',
+            onOk(){
+             return  deleteKanban({id:kanban.id})
+            }
+        })
+    }
+    const overlay = <Menu>
+                        <Menu.Item key='delete'>
+                            <Button type={"link"} onClick={startDelete}>删除</Button>
+                        </Menu.Item>
+                    </Menu>
+    return <Dropdown overlay={overlay}>
+                <Button type="link">...</Button>
+            </Dropdown>
 }
 export const  Container = styled.div`
     min-width: 27rem;
