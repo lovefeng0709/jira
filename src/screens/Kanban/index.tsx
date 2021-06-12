@@ -58,7 +58,6 @@ export const useDragEnd = ()=>{
     const {mutate:reorderTask } = useReorderTask(useTasksQueryKey())
     const {data:allTasks=[] } = useTasks(useTasksSearchParams())
     return useCallback(({source,destination,type}:DropResult)=>{
-       console.log(type)
         if(!destination){
             return
         }
