@@ -8,7 +8,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import {Routes,Route,Navigate, useLocation} from 'react-router'
 import KanbanScreen from 'screens/Kanban';
-import EpicScreen from 'screens/Epic';
+import {EpicScreen} from 'screens/Epic';
 import styled from '@emotion/styled';
 import { Menu } from 'antd';
 const useRouteType = ()=>{
@@ -53,6 +53,7 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: 16rem 1fr;
     overflow: hidden;
+    width: 100%;
 
 `
 export default ProjectScreen;
