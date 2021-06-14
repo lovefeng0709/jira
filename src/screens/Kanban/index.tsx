@@ -80,10 +80,6 @@ export const useDragEnd = ()=>{
         if(type==='ROW'){
            const fromKanbanId = +source.droppableId
            const toKanbanId = +destination.droppableId
-           //  如果不是一个看板内的task移动
-           if(fromKanbanId===toKanbanId){
-               return
-           }
            const fromTask =allTasks.filter(task=>task.kanbanId===fromKanbanId)[source.index]
            const toTask =allTasks.filter(task=>task.kanbanId===toKanbanId)[destination.index]
            if(fromTask?.id===toTask?.id){
