@@ -15,7 +15,7 @@ import right from 'assets/right.svg'
 import { useDocumentTitle } from 'utils';
 import { ErrorBox } from 'components/lib';
 //import {Helmet} from "react-helmet";
-export const UnauthenticatedAPP = () => {
+const UnauthenticatedAPP = () => {
 	const [ isRegister, setIsRegister ] = useState(false);
     const [error, setError] = useState<Error|null>(null);
 	useDocumentTitle('请登录注册以继续')
@@ -42,7 +42,7 @@ export const LongButton = styled(Button)`
 `;
 const Title = styled.h2`
   margin-bottom: 2.4rem;
-  color: rgb(94,108,132)
+  color: rgb(94,108,132);
 `;
 const Background = styled.div`
   position: absolute;
@@ -76,3 +76,4 @@ const Container =styled.div`
 	align-items:center;
 	min-height:100vh;
 `
+export default UnauthenticatedAPP
