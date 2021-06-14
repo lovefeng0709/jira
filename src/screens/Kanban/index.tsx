@@ -78,39 +78,9 @@ export const useDragEnd = () => {
                 const type = destination.index > source.index ? "after" : "before";
                 reorderKanban({ fromId, referenceId: toId, type });
             }
-<<<<<<< HEAD
-            const type = source.index > destination.index? 'before' : 'after'
-            console.log(type)
-            reorderKanban({
-                fromId,
-                referenceId: toId,
-                type
-            })
-        }
-        // task排序
-        if(type==='ROW'){
-           const fromKanbanId = +source.droppableId
-           const toKanbanId = +destination.droppableId
-        
-           const fromTask =allTasks.filter(task=>task.kanbanId===fromKanbanId)[source.index]
-           const toTask =allTasks.filter(task=>task.kanbanId===toKanbanId)[destination.index]
-           if(fromTask?.id===toTask?.id){
-               return
-           }
-          //   
-          reorderTask({
-              fromId: fromTask?.id,
-              referenceId:toTask?.id,
-              fromKanbanId,
-              toKanbanId,
-              type:fromKanbanId===toKanbanId && source.index>destination.index?'before':'after'
-          }) 
-        }
-=======
             if (type === "ROW") {
                 const fromKanbanId = +source.droppableId;
                 const toKanbanId = +destination.droppableId;
->>>>>>> dev
 
                 const fromTask = allTasks.filter(
                     (task) => task.kanbanId === fromKanbanId
