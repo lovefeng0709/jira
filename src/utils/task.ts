@@ -60,15 +60,12 @@ export const useDeleteTask = (queryKey:QueryKey)=>{
 		  useDeleteConfig(queryKey)
 		)
 }
-export const useReorderTask =(queryKey:QueryKey)=>{
-	const client = useHttp()
-	return useMutation(
-		(params:SortProps) => {
-			return client('tasks/reorder',{
-				data:params,
-				method:'POST'
-			})
-		},
-		useReorderTaskConfig(queryKey)
-	)
-}
+export const useReorderTask = (queryKey: QueryKey) => {
+	const client = useHttp();
+	return useMutation((params: SortProps) => {
+	  return client("tasks/reorder", {
+		data: params,
+		method: "POST",
+	  });
+	}, useReorderTaskConfig(queryKey));
+  };

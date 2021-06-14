@@ -31,6 +31,7 @@ export const useDeleteConfig = (queryKey: QueryKey)=> useConfig(queryKey,(target
 export const useEditConfig = (queryKey: QueryKey)=> useConfig(queryKey,(target,old)=>old?.map(item=>item.id===target.id?{...item,...target}:item)||[])
 export const useAddConfig = (queryKey: QueryKey)=> useConfig(queryKey,(target,old)=>old? [...old,target]:[])
 
+
 export const useReorderKanbanConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => reorder({ list: old, ...target }));
 
