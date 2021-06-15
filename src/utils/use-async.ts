@@ -1,12 +1,5 @@
 import { useCallback, useReducer, useState } from "react";
 import { useMountedRef } from "utils";
-
-/*
- * @Descripttion: test
- * @Date: 2021-05-09 20:58:34
- * @LastEditors: love-coding
- * @LastEditTime: 2021-06-04 09:14:02
- */
 interface State<D> {
     error: Error | null;
     data: D | null;
