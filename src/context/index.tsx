@@ -6,14 +6,17 @@
  */
 
 import React,{ ReactNode } from "react"
+import {BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from "./auth-context"
 import { QueryClient, QueryClientProvider } from "react-query";
 export const AppProviders = ({children}:{children:ReactNode})=>{
     const queryClient = new QueryClient()
     return <QueryClientProvider client={queryClient}>
-                <AuthProvider>
-                    {children}
-                </AuthProvider>
+               <Router>
+                    <AuthProvider>
+                        {children}
+                    </AuthProvider>
+                </Router>
             </QueryClientProvider>
    
 }

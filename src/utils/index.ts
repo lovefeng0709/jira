@@ -9,7 +9,10 @@ import { useState, useEffect, useRef } from 'react';
 export const isFalsy = (value: unknown): boolean => (value === 0 ? false : !value);
 export const isVoid = (value: unknown): boolean => value === undefined || value === null || value === '';
 // 在一个函数里，改变传入的对象本身是不好的
-export const cleanObject = (obj: { [key: string]: unknown }) => {
+export const cleanObject = (obj?: { [key: string]: unknown }) => {
+	if(!obj){
+		return {}
+	}
 	const result = { ...obj };
 	Object.keys(result).forEach((key) => {
 		const value = result[key];

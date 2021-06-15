@@ -8,13 +8,14 @@
 
 import { useQuery,useMutation, QueryKey } from "react-query";
 import { Project } from "types/Project";
+import { cleanObject } from "utils";
 import { useHttp } from "./http";
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-options";
 
 export const useProjects = (params?: Partial<Project>)=>{
     const client = useHttp();
 	// useQuery的第一个参数为['projects',params] 就是当params变化时也会重新请求
-   return useQuery<Project[]>(['projects',params],()=> client('projects',{data:params}))
+   return useQuery<Project[]>(['projects',cleanObject(params)],()=> client('projects',{data:params}))
 }
 
 export const useEditProject = (queryKey:QueryKey) => {

@@ -13,7 +13,7 @@ import {ReactComponent as Softwarelogo}  from 'assets/software-logo.svg'
 import { Button, Dropdown, Menu } from 'antd';
 import { resetRoute, useDocumentTitle } from 'utils';
 import { Navigate, Route, Routes } from "react-router";
-import {BrowserRouter as Router } from 'react-router-dom';
+
 import ProjectScreen from 'screens/project';
 import { ProjectModal } from 'screens/project-list/project-modal';
 import { ProjectPopover } from 'components/project-popover';
@@ -24,7 +24,6 @@ const AuthenticatedApp = () => {
 	useDocumentTitle('项目列表',false);
 	return (
 		<Container>
-			<Router>
 			<PageHeader />
 			<Main>
 				 {/* <ProjectListScreen /> */}
@@ -40,7 +39,6 @@ const AuthenticatedApp = () => {
 				
 			</Main>
 			<ProjectModal/>
-			</Router>
 		</Container>
 	);
 };
